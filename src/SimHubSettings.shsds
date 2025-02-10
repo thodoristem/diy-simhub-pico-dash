@@ -1,0 +1,253 @@
+{
+  "AutomaticReconnect": true,
+  "SerialPortName": "COM3",
+  "StartupDelayMs": 1000,
+  "IsConnecting": false,
+  "IsEnabled": true,
+  "LogIncomingData": false,
+  "IsConnected": true,
+  "BaudRate": 115200,
+  "DtrEnable": true,
+  "RtsEnable": true,
+  "EditorExpanded": true,
+  "Name": "Custom Serial device",
+  "Description": "DIY Pico LCD 3.5 DASH",
+  "LastErrorDate": "2025-02-11T01:05:48.1777257+02:00",
+  "LastErrorMessage": null,
+  "IsFreezed": false,
+  "SettingsBuilder": {
+    "Settings": [
+      {
+        "Settings": [
+          {
+            "Maximum": 11000,
+            "Minimum": 0,
+            "PropertyName": "Rpms",
+            "CurrentValue": 11000,
+            "Name": null,
+            "TypeName": "SliderEntry",
+            "Label": "RPM",
+            "Id": "0a0f081e-dd80-4308-8eb1-9f05ef463288"
+          },
+          {
+            "Maximum": 320,
+            "Minimum": 0,
+            "PropertyName": "Kph",
+            "CurrentValue": 320,
+            "Name": null,
+            "TypeName": "SliderEntry",
+            "Label": "KPH",
+            "Id": "85209b82-f187-4c03-8c2e-57487c5dbe98"
+          },
+          {
+            "Maximum": 9,
+            "Minimum": -1,
+            "PropertyName": "Gear",
+            "CurrentValue": 0,
+            "Name": null,
+            "TypeName": "SliderEntry",
+            "Label": "Gear",
+            "Id": "6c208876-2a6c-4f2c-a6a3-120ad4ce22a3"
+          },
+          {
+            "Maximum": 500,
+            "Minimum": -500,
+            "PropertyName": "BstLapDelta",
+            "CurrentValue": 0,
+            "Name": null,
+            "TypeName": "SliderEntry",
+            "Label": "Delta",
+            "Id": "83172d55-5b3e-4f14-89cb-75961c9a1972"
+          },
+          {
+            "Maximum": 100,
+            "Minimum": 0,
+            "PropertyName": "Fuel",
+            "CurrentValue": 100,
+            "Name": null,
+            "TypeName": "SliderEntry",
+            "Label": "Fuel",
+            "Id": "067e8646-0798-4960-a044-894b10c4e824"
+          },
+          {
+            "Maximum": 100,
+            "Minimum": 0,
+            "PropertyName": "ERS",
+            "CurrentValue": 100,
+            "Name": null,
+            "TypeName": "SliderEntry",
+            "Label": "ERS",
+            "Id": "6d5c2bcb-eff5-4688-ab9e-015f1b91489b"
+          },
+          {
+            "PropertyName": "CurLapTime",
+            "CurrentValue": "00:00:00",
+            "Name": null,
+            "TypeName": "TextEntry",
+            "Label": "Current Lap Time",
+            "Id": "3ee23671-cd72-42c8-8ca6-65c7c6ecff21"
+          },
+          {
+            "PropertyName": "BstLapTime",
+            "CurrentValue": "00:00:00",
+            "Name": null,
+            "TypeName": "TextEntry",
+            "Label": "Best Lap Time",
+            "Id": "f92afaaf-0577-4015-8ca5-df3e6dd61e98"
+          },
+          {
+            "Maximum": 99,
+            "Minimum": 0,
+            "PropertyName": "CurrentLap",
+            "CurrentValue": 99,
+            "Name": null,
+            "TypeName": "SliderEntry",
+            "Label": "Current Lap",
+            "Id": "362363b2-df07-4ed4-b92f-21748f0e41fd"
+          },
+          {
+            "Maximum": 99,
+            "Minimum": 0,
+            "PropertyName": "TotalLaps",
+            "CurrentValue": 99,
+            "Name": null,
+            "TypeName": "SliderEntry",
+            "Label": "Total Laps",
+            "Id": "da5126b9-7117-45a4-a576-ea181ca8bec8"
+          },
+          {
+            "Maximum": 99,
+            "Minimum": 0,
+            "PropertyName": "Position",
+            "CurrentValue": 99,
+            "Name": null,
+            "TypeName": "SliderEntry",
+            "Label": "Position",
+            "Id": "4f3d4fe8-f4fb-4790-84b7-2e7abbb42daf"
+          },
+          {
+            "Maximum": 99,
+            "Minimum": 0,
+            "PropertyName": "PositionsTotal",
+            "CurrentValue": 99,
+            "Name": null,
+            "TypeName": "SliderEntry",
+            "Label": "Positions Total",
+            "Id": "fe6dcc13-d64c-4eeb-8da0-088239b3257d"
+          },
+          {
+            "Maximum": 10,
+            "Minimum": 0,
+            "PropertyName": "TCLevel",
+            "CurrentValue": 10,
+            "Name": null,
+            "TypeName": "SliderEntry",
+            "Label": "TC",
+            "Id": "71905acd-1a31-45a3-a05d-346f0b646747"
+          },
+          {
+            "Maximum": 10,
+            "Minimum": 0,
+            "PropertyName": "ABSLevel",
+            "CurrentValue": 10,
+            "Name": null,
+            "TypeName": "SliderEntry",
+            "Label": "ABS",
+            "Id": "9a1e1f75-1a92-464c-89ab-e9865d03a6bc"
+          },
+          {
+            "Maximum": 100,
+            "Minimum": 0,
+            "PropertyName": "BrakeBias",
+            "CurrentValue": 100,
+            "Name": null,
+            "TypeName": "SliderEntry",
+            "Label": "BrakeBias",
+            "Id": "4b054330-5c4f-41d3-b3fe-36374dd0a73c"
+          },
+          {
+            "Maximum": 100,
+            "Minimum": 0,
+            "PropertyName": "TurboPercent",
+            "CurrentValue": 100,
+            "Name": null,
+            "TypeName": "SliderEntry",
+            "Label": "Turbo Pct",
+            "Id": "c611d964-8d04-441b-9bf5-2a19da8d6950"
+          },
+          {
+            "Options": [
+              {
+                "Key": "0",
+                "Label": "No Pits"
+              },
+              {
+                "Key": "1",
+                "Label": "Pit limiter on"
+              },
+              {
+                "Key": "2",
+                "Label": "In pit lane"
+              }
+            ],
+            "PropertyName": "PIT",
+            "CurrentValue": "2",
+            "Name": null,
+            "TypeName": "ComboboxEntry",
+            "Label": "PIT",
+            "Id": "a683c259-eda7-4a0f-8b69-4aac979d99d0"
+          },
+          {
+            "Options": [
+              {
+                "Key": "0",
+                "Label": "DRS Not available"
+              },
+              {
+                "Key": "1",
+                "Label": "DRS Available"
+              },
+              {
+                "Key": "2",
+                "Label": "DRS Enabled"
+              }
+            ],
+            "PropertyName": "DRS",
+            "CurrentValue": "1",
+            "Name": null,
+            "TypeName": "ComboboxEntry",
+            "Label": "DRS",
+            "Id": "40a6b560-0275-4e7c-9f33-1bc11ee903f8"
+          }
+        ],
+        "Name": null,
+        "TypeName": "GroupEntry",
+        "Label": "Test (Works when game is NOT running)",
+        "Id": "277c4933-21ed-41ee-8770-85eacc6c8312"
+      }
+    ],
+    "IsEditMode": false
+  },
+  "OnConnectMessage": {
+    "JSExt": 0,
+    "Interpreter": 1,
+    "Expression": ""
+  },
+  "OnDisconnectMessage": {
+    "JSExt": 0,
+    "Interpreter": 1,
+    "Expression": ""
+  },
+  "UpdateMessages": [
+    {
+      "Message": {
+        "JSExt": 0,
+        "Interpreter": 1,
+        "Expression": "if (parseInt($prop('DataCorePlugin.GameRunning'))){\r\n\t// Real Data\r\n\trpm = $prop('Rpms');\r\n\trpmPct = parseInt($prop('CarSettings_CurrentDisplayedRPMPercent'));\r\n\tkph = parseInt($prop('SpeedKmh'));\r\n\tgear = $prop('Gear');\r\n\tswitch(gear){\r\n\t\tcase 'R':\r\n\t\t\tgear = -1;\r\n\t\t\tbreak;\r\n\t\tcase 'N':\r\n\t\t\tgear = 0;\r\n\t\t\tbreak;\r\n\t}\r\n\tfuelPct = parseInt($prop('DataCorePlugin.Computed.Fuel_Percent'));\r\n\tersPct = parseInt($prop('ERSPercent'));\r\n\tshiftLight = parseFloat($prop('CarSettings_RPMShiftLight1')) \r\n\t      + parseFloat($prop('CarSettings_RPMShiftLight2'))\r\n\t      + parseInt($prop('CarSettings_RPMRedLineReached'));\r\n\tdrs = parseInt($prop('DRSAvailable')) + parseInt($prop('DRSEnabled'));\r\n\tpit = parseInt($prop('PitLimiterOn')) + parseInt($prop('IsInPitLane'));   \r\n\tcurLapTime = $prop('CurrentLapTime');\r\n\tbstLapTime = $prop('PersistantTrackerPlugin.SessionBest');\r\n\tbstLapDelta = parseFloat($prop('PersistantTrackerPlugin.SessionBestLiveDeltaSeconds'));\r\n\tlapCurrent = $prop('CurrentLap');\r\n\tlapsTotal = $prop('TotalLaps');\r\n\tposition = $prop('Position');\r\n\tpositionsTotal = $prop('PlayerClassOpponentsCount');\r\n\tassistABS = $prop('ABSLevel');\r\n\tassistTC = $prop('TCLevel');\r\n\tbrakeBias = parseFloat($prop('BrakeBias'));\r\n\tturboPct = parseFloat($prop('TurboPercent'));\r\n} else {\r\n    // For testing\r\n\trpm = $prop('Settings.Rpms');\r\n\trpmPct = parseInt((rpm / 11000) * 100);\r\n\tkph = $prop('Settings.Kph');\r\n\tgear = $prop('Settings.Gear');\r\n\tfuelPct = $prop('Settings.Fuel');\r\n\tersPct = $prop('Settings.ERS');\r\n\tshiftLight = (rpm > 7000 || rpmPct > 70) + (rpm > 8000 || rpmPct > 80) + (rpm > 9000 || rpmPct > 90);\r\n\tdrs = $prop('Settings.DRS.Key');\r\n\tpit = $prop('Settings.PIT.Key');\r\n\tcurLapTime = $prop('Settings.CurLapTime');\r\n\tbstLapTime = $prop('Settings.BstLapTime');\r\n\tbstLapDelta = parseFloat($prop('Settings.BstLapDelta'));\r\n\tlapCurrent = $prop('Settings.CurrentLap');\r\n\tlapsTotal = $prop('Settings.TotalLaps');\r\n\tposition = $prop('Settings.Position');\r\n\tpositionsTotal = $prop('Settings.PositionsTotal');\r\n\tassistABS = $prop('Settings.ABSLevel');\r\n\tassistTC = $prop('Settings.TCLevel');\r\n\tbrakeBias = $prop('Settings.BrakeBias');\r\n\tturboPct = $prop('Settings.TurboPercent');\r\n}\r\n\r\nreturn String(rpm).padStart(5,'0')  + 'R' \r\n\t + String(rpmPct).padStart(3,'0') + 'R'\r\n     + String(kph).padStart(3,'0')  + 'S' \r\n\t + String(gear).padStart(1,'0') + 'G'\r\n\t + String(shiftLight.toFixed(0)).padStart(1,'0') + 'G'\r\n\t + String(fuelPct).padStart(3,'0') + 'I'\r\n\t + String(ersPct.toFixed(1)).padStart(4,'0') + 'I'\r\n\t + String(drs).padStart(1,'0') + 'I'\r\n\t + String(pit).padStart(1,'0') + 'I'\r\n\t + String(curLapTime).substr(3,9) + 'L'\r\n\t + String(bstLapTime).substr(3,9) + 'L'\r\n\t + String(bstLapDelta.toFixed(3)).padStart(6,'0') + 'L'\r\n\t + String(lapCurrent).padStart(2,'0') + 'L'\r\n\t + String(lapsTotal).padStart(2,'0') + 'L'\r\n\t + String(position).padStart(2,'0') + 'L'\r\n\t + String(positionsTotal).padStart(2,'0') + 'L'\r\n\t + String(assistABS).padStart(2,'0') + 'I'\r\n\t + String(assistTC).padStart(2,'0') + 'I'\r\n\t + String(brakeBias.toFixed(1)).padStart(5,'0') + 'I'\r\n\t + String(turboPct.toFixed(1)).padStart(5,'0') + 'I'\r\n\t + '|';",
+        "PreExpression": "var rpm = 0;\r\nvar rpmPct = 0;\r\nvar kph = 0;\r\nvar gear = '';\r\nvar fuelPct = 0;\r\nvar ersPct = 0;\r\nvar shiftLight = 0;\r\nvar drs = 0;\r\nvar pit = 0;\r\nvar curLapTime = \"\";\r\nvar bstLapTime = \"\";\r\nvar bstLapDelta = 0;\r\nvar lapCurrent = 0;\r\nvar lapsTotal = 0;\r\nvar position = 0;\r\nvar positionsTotal = 0;\r\nvar assistABS = 0;\r\nvar assistTC = 0;\r\nvar brakeBias = 0;\r\nvar turboPct = 0;"
+      },
+      "IsEnabled": true,
+      "MaximumFrequency": 60
+    }
+  ]
+}
