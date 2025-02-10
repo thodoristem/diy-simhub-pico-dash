@@ -192,21 +192,6 @@ int static TFT_HF_H = 0;
 #define NUM_SP_HF_W 36
 #define NUM_SP_HF_H 15
 
-#define ASSISTS_SP_W 62
-#define ASSISTS_SP_H 58
-#define ASSISTS_SP_HF_W 31
-#define ASSISTS_SP_HF_H 29
-
-#define CONTROLS_SP_W 62
-#define CONTROLS_SP_H 48
-#define CONTROLS_SP_HF_W 31
-#define CONTROLS_SP_HF_H 24
-
-#define POSITION_SP_W 100
-#define POSITION_SP_H 50
-#define POSITION_SP_HF_W 50
-#define POSITION_SP_HF_H 25
-
 #define LAP_SP_W 50
 #define LAP_SP_H 36
 #define LAP_SP_HF_W 25
@@ -221,11 +206,6 @@ TFT_eSprite gearSp = TFT_eSprite(&TFT);
 TFT_eSprite lapTimeSp = TFT_eSprite(&TFT);
 TFT_eSprite indicatorSp = TFT_eSprite(&TFT);
 TFT_eSprite numSp = TFT_eSprite(&TFT);
-
-TFT_eSprite lapSp = TFT_eSprite(&TFT);
-TFT_eSprite assistsSp = TFT_eSprite(&TFT);
-TFT_eSprite controlsSp = TFT_eSprite(&TFT);
-TFT_eSprite positionSp = TFT_eSprite(&TFT);
 
 void changeShiftLightColor()
 {
@@ -266,15 +246,9 @@ void drawRPM(bool drawInitial)
     if (drawInitial || rpmValue != rpmValuePrev)
     {
         rpmValuePrev = rpmValue;
-
         rpmSp.fillSprite(TFT_BLACK);
-
-        // rpmSp.setTextColor(TFT_DARKGRAY);
-        // rpmSp.drawString("00000", RPM_SP_W - PADDING_DB, RPM_SP_HF_H - PADDING_HF);
-
         rpmSp.setTextColor(TFT_WHITE);
         rpmSp.drawNumber(rpmValue, RPM_SP_W - PADDING_DB, RPM_SP_HF_H - PADDING_HF);
-
         rpmSp.pushSprite(PADDING_HF, RPM_BAR_SP_H + PADDING);
     }
 }
@@ -284,15 +258,9 @@ void drawKPH(bool drawInitial)
     if (drawInitial || kphValue != kphValuePrev)
     {
         kphValuePrev = kphValue;
-
         kphSp.fillSprite(TFT_BLACK);
-
-        // kphSp.setTextColor(TFT_DARKGRAY);
-        // kphSp.drawString("00000", RPM_SP_W - PADDING_DB, RPM_SP_HF_H - PADDING_HF);
-
         kphSp.setTextColor(TFT_WHITE);
         kphSp.drawNumber(kphValue, KPH_SP_W - PADDING_DB, KPH_SP_HF_H - PADDING_HF);
-
         kphSp.pushSprite(TFT.width() - KPH_SP_W + PADDING_HF, RPM_BAR_SP_H + PADDING);
     }
 }
@@ -759,30 +727,6 @@ void setup()
     numSp.setTextSize(1);
     numSp.setTextColor(TFT_WHITE, TFT_BLACK);
     drawNum(true);
-
-    // positionSp.createSprite(POSITION_SP_W - PADDING, POSITION_SP_H - PADDING);
-    // positionSp.setColorDepth(COLOR_DEPTH);
-    // positionSp.setTextDatum(TC_DATUM);
-    // positionSp.setFreeFont(POSITION_FONT);
-    // positionSp.setTextSize(1);
-    // positionSp.setTextColor(TFT_WHITE, TFT_BLACK);
-    // drawPosition(true);
-
-    // lapSp.createSprite(LAP_SP_W - PADDING, LAP_SP_H - PADDING);
-    // lapSp.setColorDepth(COLOR_DEPTH);
-    // lapSp.setTextDatum(BR_DATUM);
-    // lapSp.setFreeFont(LAP_FONT);
-    // lapSp.setTextSize(1);
-    // lapSp.setTextColor(TFT_WHITE, TFT_BLACK);
-    // drawLaps(true);
-
-    // controlsSp.createSprite(CONTROLS_SP_W - PADDING, CONTROLS_SP_H - PADDING);
-    // controlsSp.setColorDepth(COLOR_DEPTH);
-    // controlsSp.setTextDatum(TC_DATUM);
-    // controlsSp.setFreeFont(CONTROLS_FONT);
-    // controlsSp.setTextSize(1);
-    // controlsSp.setTextColor(TFT_WHITE, TFT_BLACK);
-    // drawControls(true);
 }
 
 // =========================================================================
@@ -797,10 +741,6 @@ void loop()
     drawIndicatorLabel(false);
     drawLapTime(false);
     drawNum(false);
-
-    // drawPosition(false);
-    // drawLaps(false);
-    // drawControls(false);
 }
 
 // =========================================================================
