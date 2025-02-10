@@ -2,7 +2,6 @@
 #include <TFT_eSPI.h>
 #include <fonts/whitrabt11pt7b.h>
 #include <fonts/whitrabt12pt7b.h>
-#include <fonts/whitrabt14pt7b.h>
 #include <fonts/whitrabt16pt7b.h>
 #include <fonts/whitrabt70pt7b.h>
 
@@ -11,9 +10,6 @@
 
 #define FONT_12 &whitrabt12pt7b
 #define FONT_12_HEIGHT 18
-
-#define FONT_14 &whitrabt14pt7b
-#define FONT_14_HEIGHT 21
 
 #define FONT_16 &whitrabt16pt7b
 #define FONT_16_HEIGHT 24
