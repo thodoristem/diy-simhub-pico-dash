@@ -33,13 +33,13 @@
 #define ILI9488_DRIVER     // WARNING: Do not connect ILI9488 display SDO to MISO if other devices share the SPI bus (TFT SDO does NOT tristate when CS is high)
 // #define ST7789_DRIVER      // Full configuration option, define additional parameters below for this display
 // #define ST7789_2_DRIVER    // Minimal configuration option, define additional parameters below for this display
-//#define R61581_DRIVER
-//#define RM68140_DRIVER
-//#define ST7796_DRIVER
-//#define SSD1963_480_DRIVER
-//#define SSD1963_800_DRIVER
-//#define SSD1963_800ALT_DRIVER
-//#define ILI9225_DRIVER
+// #define R61581_DRIVER
+// #define RM68140_DRIVER
+// #define ST7796_DRIVER
+// #define SSD1963_480_DRIVER
+// #define SSD1963_800_DRIVER
+// #define SSD1963_800ALT_DRIVER
+// #define ILI9225_DRIVER
 
 // Some displays support SPI reads via the MISO pin, other displays have a single
 // bi-directional SDA pin and the library will try to read this via the MOSI line.
@@ -85,7 +85,6 @@
 #define TFT_INVERSION_ON
 // #define TFT_INVERSION_OFF
 
-
 // ##################################################################################
 //
 // Section 2. Define the pins that are used to interface with the display here
@@ -128,16 +127,16 @@
 // #define TFT_CS   20  // Chip select control pin
 // #define TFT_DC   18  // Data Command control pin
 // #define TFT_RST  19  // Reset pin (could connect to Arduino RESET pin)
-//#define TFT_BL     // LED back-light
+// #define TFT_BL     // LED back-light
 
 #define TFT_MISO 12
 #define TFT_MOSI 11
 #define TFT_SCLK 10
-#define TFT_CS   9 // Not connected
-#define TFT_DC   8
-#define TFT_RST  15  // Connect reset to ensure display initialises
-#define TFT_BL   13  // LED back-light
- #define TFT_BACKLIGHT_ON HIGH  // Level to turn ON back-light (HIGH or LOW)
+#define TFT_CS 9 // Not connected
+#define TFT_DC 8
+#define TFT_RST 15            // Connect reset to ensure display initialises
+#define TFT_BL 13             // LED back-light
+#define TFT_BACKLIGHT_ON HIGH // Level to turn ON back-light (HIGH or LOW)
 
 #define TOUCH_CS 16
 
