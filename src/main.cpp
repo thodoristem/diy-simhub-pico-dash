@@ -1,9 +1,13 @@
 #include <Arduino.h>
 #include <TFT_eSPI.h>
+#include <fonts/whitrabt9pt7b.h>
 #include <fonts/whitrabt11pt7b.h>
 #include <fonts/whitrabt12pt7b.h>
 #include <fonts/whitrabt16pt7b.h>
 #include <fonts/whitrabt70pt7b.h>
+
+#define FONT_9 &whitrabt9pt7b
+#define FONT_9_HEIGHT 13
 
 #define FONT_11 &whitrabt11pt7b
 #define FONT_11_HEIGHT 16
@@ -19,7 +23,7 @@
 
 #define DEFAULT_FONT FONT_11
 
-#define MSG_LENGTH 92
+#define MSG_LENGTH 136
 #define MSG_END_CHAR '|'
 #define RPM_DELIMITER "R"
 #define KPH_DELIMITER "S"
@@ -94,6 +98,33 @@ volatile float brakeBiasPrev = 0;
 volatile float turboPct = 0;
 volatile float turboPctPrev = 0;
 
+volatile short tyreTempFLValue = 0;
+volatile short tyreTempFLValuePrev = 0;
+volatile short tyreTempFRValue = 0;
+volatile short tyreTempFRValuePrev = 0;
+volatile short tyreTempRLValue = 0;
+volatile short tyreTempRLValuePrev = 0;
+volatile short tyreTempRRValue = 0;
+volatile short tyreTempRRValuePrev = 0;
+
+volatile short brakeTempFLValue = 0;
+volatile short brakeTempFLValuePrev = 0;
+volatile short brakeTempFRValue = 0;
+volatile short brakeTempFRValuePrev = 0;
+volatile short brakeTempRLValue = 0;
+volatile short brakeTempRLValuePrev = 0;
+volatile short brakeTempRRValue = 0;
+volatile short brakeTempRRValuePrev = 0;
+
+volatile short tyreWearFLValue = 0;
+volatile short tyreWearFLValuePrev = 0;
+volatile short tyreWearFRValue = 0;
+volatile short tyreWearFRValuePrev = 0;
+volatile short tyreWearRLValue = 0;
+volatile short tyreWearRLValuePrev = 0;
+volatile short tyreWearRRValue = 0;
+volatile short tyreWearRRValuePrev = 0;
+
 void readSerial()
 {
     // Reading Serial Message
@@ -146,6 +177,21 @@ void readSerial()
         brakeBias = atof(strtok(NULL, INDICATOR_DELIMITER));
         turboPct = atof(strtok(NULL, INDICATOR_DELIMITER));
 
+        tyreTempFLValue = atoi(strtok(NULL, INDICATOR_DELIMITER));
+        tyreTempFRValue = atoi(strtok(NULL, INDICATOR_DELIMITER));
+        tyreTempRLValue = atoi(strtok(NULL, INDICATOR_DELIMITER));
+        tyreTempRRValue = atoi(strtok(NULL, INDICATOR_DELIMITER));
+
+        brakeTempFLValue = atoi(strtok(NULL, INDICATOR_DELIMITER));
+        brakeTempFRValue = atoi(strtok(NULL, INDICATOR_DELIMITER));
+        brakeTempRLValue = atoi(strtok(NULL, INDICATOR_DELIMITER));
+        brakeTempRRValue = atoi(strtok(NULL, INDICATOR_DELIMITER));
+
+        tyreWearFLValue = atoi(strtok(NULL, INDICATOR_DELIMITER));
+        tyreWearFRValue = atoi(strtok(NULL, INDICATOR_DELIMITER));
+        tyreWearRLValue = atoi(strtok(NULL, INDICATOR_DELIMITER));
+        tyreWearRRValue = atoi(strtok(NULL, INDICATOR_DELIMITER));
+
         newMsg = false;
     }
 }
@@ -192,6 +238,11 @@ int static TFT_HF_H = 0;
 #define NUM_SP_HF_W 36
 #define NUM_SP_HF_H 15
 
+#define MINI_PROG_BAR_SP_W 72
+#define MINI_PROG_BAR_SP_H 14
+#define MINI_PROG_BAR_SP_HF_W 36
+#define MINI_PROG_BAR_SP_HF_H 7
+
 #define LAP_SP_W 50
 #define LAP_SP_H 36
 #define LAP_SP_HF_W 25
@@ -206,6 +257,7 @@ TFT_eSprite gearSp = TFT_eSprite(&TFT);
 TFT_eSprite lapTimeSp = TFT_eSprite(&TFT);
 TFT_eSprite indicatorSp = TFT_eSprite(&TFT);
 TFT_eSprite numSp = TFT_eSprite(&TFT);
+TFT_eSprite miniProgBarSp = TFT_eSprite(&TFT);
 
 void changeShiftLightColor()
 {
@@ -337,11 +389,11 @@ void drawIndicatorLabel(bool drawInitial)
 
 void drawNum(bool drawInitial)
 {
-    if (drawInitial || ersValue != ersValuePrev)
+    if (drawInitial || absValue != absValuePrev)
     {
-        ersValuePrev = ersValue;
+        absValuePrev = absValue;
         numSp.fillSprite(TFT_BLACK);
-        numSp.drawFloat(ersValue, 1, NUM_SP_HF_W - PADDING_HF - PADDING_HF / 2, NUM_SP_HF_H - PADDING);
+        numSp.drawNumber(absValue, NUM_SP_HF_W - PADDING_HF - PADDING_HF / 2, NUM_SP_HF_H - PADDING);
         numSp.pushSprite(TFT.width() - NUM_SP_W - NUM_SP_W, RPM_BAR_SP_H + GEAR_SP_H + FONT_16_HEIGHT + PADDING);
     }
 
@@ -369,11 +421,11 @@ void drawNum(bool drawInitial)
         numSp.pushSprite(TFT.width() - NUM_SP_W + PADDING_HF, RPM_BAR_SP_H + GEAR_SP_H + FONT_16_HEIGHT + PADDING);
     }
 
-    if (drawInitial || absValue != absValuePrev)
+    if (drawInitial || ersValue != ersValuePrev)
     {
-        absValuePrev = absValue;
+        ersValuePrev = ersValue;
         numSp.fillSprite(TFT_BLACK);
-        numSp.drawNumber(absValue, NUM_SP_HF_W - PADDING_HF - PADDING_HF / 2, NUM_SP_HF_H - PADDING);
+        numSp.drawFloat(ersValue, 1, NUM_SP_HF_W - PADDING_HF - PADDING_HF / 2, NUM_SP_HF_H - PADDING);
         numSp.pushSprite(TFT.width() - NUM_SP_W + PADDING_HF, RPM_BAR_SP_H + GEAR_SP_H + NUM_SP_H + FONT_16_HEIGHT * 2 + PADDING_DB);
     }
 
@@ -402,6 +454,133 @@ void drawNum(bool drawInitial)
         numSp.drawString(lapCurrentValue + "|" + lapsTotalValue, NUM_SP_HF_W - PADDING_HF - PADDING_HF / 2, NUM_SP_HF_H - PADDING);
         numSp.pushSprite(NUM_SP_W + PADDING, RPM_BAR_SP_H + GEAR_SP_H + FONT_16_HEIGHT + PADDING);
     }
+
+    if (drawInitial || tyreTempFLValue != tyreTempFLValuePrev || brakeTempFLValue != brakeTempFLValuePrev)
+    {
+        tyreTempFLValuePrev = tyreTempFLValue;
+        brakeTempFLValuePrev = brakeTempFLValue;
+        numSp.fillSprite(TFT_BLACK);
+        numSp.setFreeFont(FONT_9);
+        numSp.drawString(
+            String(tyreTempFLValue) + "|" + String(brakeTempFLValue),
+            NUM_SP_HF_W - PADDING_HF - PADDING_HF / 2,
+            NUM_SP_HF_H - PADDING);
+        numSp.pushSprite(
+            PADDING_HF,
+            RPM_BAR_SP_H + GEAR_SP_H + NUM_SP_H + FONT_16_HEIGHT * 2 + PADDING_DB * 3);
+        numSp.setFreeFont(FONT_12);
+    }
+
+    if (drawInitial || tyreTempRLValue != tyreTempRLValuePrev || brakeTempRLValue != brakeTempRLValuePrev)
+    {
+        tyreTempRLValuePrev = tyreTempRLValue;
+        brakeTempRLValuePrev = brakeTempRLValue;
+        numSp.fillSprite(TFT_BLACK);
+        numSp.setFreeFont(FONT_9);
+        numSp.drawString(
+            String(tyreTempRLValue) + "|" + String(brakeTempRLValue),
+            NUM_SP_HF_W - PADDING_HF - PADDING_HF / 2,
+            NUM_SP_HF_H - PADDING);
+        numSp.pushSprite(
+            PADDING_HF,
+            RPM_BAR_SP_H + GEAR_SP_H + NUM_SP_H * 2 + FONT_16_HEIGHT * 3 - PADDING_HF);
+        numSp.setFreeFont(FONT_12);
+    }
+
+    if (drawInitial || tyreTempFRValue != tyreTempFRValuePrev || brakeTempFRValue != brakeTempFRValuePrev)
+    {
+        tyreTempFRValuePrev = tyreTempFRValue;
+        brakeTempFRValuePrev = brakeTempFRValue;
+        numSp.fillSprite(TFT_BLACK);
+        numSp.setFreeFont(FONT_9);
+        numSp.drawString(
+            String(brakeTempFRValue) + "|" + String(tyreTempFRValue),
+            NUM_SP_HF_W - PADDING_HF - PADDING_HF / 2,
+            NUM_SP_HF_H - PADDING);
+        numSp.pushSprite(
+            NUM_SP_W + PADDING,
+            RPM_BAR_SP_H + GEAR_SP_H + NUM_SP_H + FONT_16_HEIGHT * 2 + PADDING_DB * 3);
+        numSp.setFreeFont(FONT_12);
+    }
+
+    if (drawInitial || tyreTempRRValue != tyreTempRRValuePrev || brakeTempRRValue != brakeTempRRValuePrev)
+    {
+        tyreTempRRValuePrev = tyreTempRRValue;
+        brakeTempRRValuePrev = brakeTempRRValue;
+        numSp.fillSprite(TFT_BLACK);
+        numSp.setFreeFont(FONT_9);
+        numSp.drawString(
+            String(brakeTempRRValue) + "|" + String(tyreTempRRValue),
+            NUM_SP_HF_W - PADDING_HF - PADDING_HF / 2,
+            NUM_SP_HF_H - PADDING);
+        numSp.pushSprite(
+            NUM_SP_W + PADDING,
+            RPM_BAR_SP_H + GEAR_SP_H + NUM_SP_H * 2 + FONT_16_HEIGHT * 3 - PADDING_HF);
+        numSp.setFreeFont(FONT_12);
+    }
+}
+
+void drawMinibar(bool drawInitial)
+{
+    if (drawInitial || tyreWearFLValue != tyreWearFLValuePrev)
+    {
+        tyreWearFLValuePrev = tyreWearFLValue;
+        miniProgBarSp.fillSprite(TFT_RED);
+        miniProgBarSp.fillRect(
+            0,
+            0,
+            map(tyreWearFLValue, 0, 100, 0, MINI_PROG_BAR_SP_W),
+            MINI_PROG_BAR_SP_H,
+            TFT_GREEN);
+        miniProgBarSp.pushSprite(
+            PADDING_HF,
+            RPM_BAR_SP_H + GEAR_SP_H + NUM_SP_H + FONT_16_HEIGHT * 2 + PADDING_DB);
+    }
+
+    if (drawInitial || tyreWearRLValue != tyreWearRLValuePrev)
+    {
+        tyreWearRLValuePrev = tyreWearRLValue;
+        miniProgBarSp.fillSprite(TFT_RED);
+        miniProgBarSp.fillRect(
+            0,
+            0,
+            map(tyreWearRLValue, 0, 100, 0, MINI_PROG_BAR_SP_W),
+            MINI_PROG_BAR_SP_H,
+            TFT_GREEN);
+        miniProgBarSp.pushSprite(
+            PADDING_HF,
+            RPM_BAR_SP_H + GEAR_SP_H + NUM_SP_H * 3 + FONT_16_HEIGHT * 3);
+    }
+
+    if (drawInitial || tyreWearFRValue != tyreWearFRValuePrev)
+    {
+        tyreWearFRValuePrev = tyreWearFRValue;
+        miniProgBarSp.fillSprite(TFT_RED);
+        miniProgBarSp.fillRect(
+            0,
+            0,
+            map(tyreWearFRValue, 0, 100, 0, MINI_PROG_BAR_SP_W),
+            MINI_PROG_BAR_SP_H,
+            TFT_GREEN);
+        miniProgBarSp.pushSprite(
+            NUM_SP_W + PADDING,
+            RPM_BAR_SP_H + GEAR_SP_H + NUM_SP_H + FONT_16_HEIGHT * 2 + PADDING_DB);
+    }
+
+    if (drawInitial || tyreWearRRValue != tyreWearRRValuePrev)
+    {
+        tyreWearRRValuePrev = tyreWearRRValue;
+        miniProgBarSp.fillSprite(TFT_RED);
+        miniProgBarSp.fillRect(
+            0,
+            0,
+            map(tyreWearRRValue, 0, 100, 0, MINI_PROG_BAR_SP_W),
+            MINI_PROG_BAR_SP_H,
+            TFT_GREEN);
+        miniProgBarSp.pushSprite(
+            NUM_SP_W + PADDING,
+            RPM_BAR_SP_H + GEAR_SP_H + NUM_SP_H * 3 + FONT_16_HEIGHT * 3);
+    }
 }
 
 void drawLapTime(bool drawInitial)
@@ -421,9 +600,12 @@ void drawLapTime(bool drawInitial)
         {
             lapTimeSp.setTextColor(TFT_WHITE);
         }
+        lapTimeSp.setTextDatum(CC_DATUM);
         lapTimeSp.fillSprite(TFT_BLACK);
         lapTimeSp.drawFloat(bstLapTimeDeltaValue, 3, LAP_TIME_SP_HF_W - PADDING_HF, LAP_TIME_SP_HF_H - PADDING_HF);
         lapTimeSp.pushSprite(TFT_HF_W - LAP_TIME_SP_HF_W + PADDING_HF, RPM_BAR_SP_H + GEAR_SP_H + FONT_11_HEIGHT + PADDING_DB);
+        lapTimeSp.setTextDatum(CR_DATUM);
+        lapTimeSp.setTextColor(TFT_WHITE, TFT_BLACK);
     }
 
     if (drawInitial || curLapTimeValue != curLapTimeValuePrev)
@@ -431,8 +613,7 @@ void drawLapTime(bool drawInitial)
         curLapTimeValuePrev = curLapTimeValue;
 
         lapTimeSp.fillSprite(TFT_BLACK);
-        lapTimeSp.setTextColor(TFT_WHITE);
-        lapTimeSp.drawString(curLapTimeValue, LAP_TIME_SP_HF_W - PADDING_HF, LAP_TIME_SP_HF_H - PADDING_HF);
+        lapTimeSp.drawString(curLapTimeValue, LAP_TIME_SP_W - PADDING_DB - PADDING - PADDING_HF, LAP_TIME_SP_HF_H - PADDING_HF);
         lapTimeSp.pushSprite(TFT_HF_W - LAP_TIME_SP_HF_W + PADDING_HF, RPM_BAR_SP_H + GEAR_SP_H + LAP_TIME_SP_H + FONT_11_HEIGHT * 2 + PADDING_DB + PADDING_HF);
     }
 
@@ -441,8 +622,7 @@ void drawLapTime(bool drawInitial)
         bstLapTimeValuePrev = bstLapTimeValue;
 
         lapTimeSp.fillSprite(TFT_BLACK);
-        lapTimeSp.setTextColor(TFT_WHITE);
-        lapTimeSp.drawString(bstLapTimeValue, LAP_TIME_SP_HF_W - PADDING_HF, LAP_TIME_SP_HF_H - PADDING_HF);
+        lapTimeSp.drawString(bstLapTimeValue, LAP_TIME_SP_W - PADDING_DB - PADDING - PADDING_HF, LAP_TIME_SP_HF_H - PADDING_HF);
         lapTimeSp.pushSprite(TFT_HF_W - LAP_TIME_SP_HF_W + PADDING_HF, RPM_BAR_SP_H + GEAR_SP_H + LAP_TIME_SP_H * 2 + FONT_11_HEIGHT * 3 + PADDING_DB + PADDING);
     }
 }
@@ -541,7 +721,7 @@ void drawOnce()
         TFT_DARKCYAN);
     TFT.setTextDatum(TC_DATUM);
     TFT.drawString(
-        "FUEL",
+        "FUEL%",
         TFT.width() - NUM_SP_HF_W,
         RPM_BAR_SP_H + GEAR_SP_H + PADDING_DB);
 
@@ -555,7 +735,7 @@ void drawOnce()
         TFT_DARKCYAN);
     TFT.setTextDatum(TC_DATUM);
     TFT.drawString(
-        "ABS",
+        "ERS%",
         TFT.width() - NUM_SP_HF_W,
         RPM_BAR_SP_H + GEAR_SP_H + NUM_SP_H + FONT_11_HEIGHT + PADDING_DB * 2 + PADDING);
 
@@ -569,7 +749,7 @@ void drawOnce()
         TFT_DARKCYAN);
     TFT.setTextDatum(TC_DATUM);
     TFT.drawString(
-        "BOOST",
+        "BST%",
         TFT.width() - NUM_SP_HF_W,
         RPM_BAR_SP_H + GEAR_SP_H + NUM_SP_H * 2 + FONT_11_HEIGHT * 2 + PADDING_DB * 4);
 
@@ -583,7 +763,7 @@ void drawOnce()
         TFT_DARKCYAN);
     TFT.setTextDatum(TC_DATUM);
     TFT.drawString(
-        "ERS",
+        "ABS",
         TFT.width() - NUM_SP_HF_W * 3 - PADDING_HF * 2,
         RPM_BAR_SP_H + GEAR_SP_H + PADDING_DB);
 
@@ -642,6 +822,32 @@ void drawOnce()
         "LAP",
         NUM_SP_HF_W * 3 + PADDING_HF,
         RPM_BAR_SP_H + GEAR_SP_H + PADDING_DB);
+
+    // TYRE/BRAKE TEMPS
+    TFT.drawRoundRect(
+        0,
+        RPM_BAR_SP_H + GEAR_SP_H + NUM_SP_H + FONT_11_HEIGHT + PADDING_DB * 2,
+        NUM_SP_W * 2 + PADDING_HF,
+        NUM_SP_H * 2 + FONT_11_HEIGHT * 2 + PADDING_DB * 3,
+        5,
+        TFT_DARKCYAN);
+    TFT.setTextDatum(TC_DATUM);
+    TFT.drawString(
+        "T/B INFO",
+        NUM_SP_HF_W * 2 + PADDING_HF,
+        RPM_BAR_SP_H + GEAR_SP_H + NUM_SP_H + FONT_11_HEIGHT + PADDING_DB * 2 + PADDING);
+    TFT.drawRect(
+        PADDING,
+        RPM_BAR_SP_H + GEAR_SP_H + NUM_SP_H * 2 + FONT_11_HEIGHT * 3 + PADDING_DB * 2 + PADDING,
+        NUM_SP_W * 2 + PADDING_HF - PADDING_DB,
+        2,
+        TFT_DARKCYAN);
+    TFT.drawRect(
+        NUM_SP_W,
+        RPM_BAR_SP_H + GEAR_SP_H + NUM_SP_H + FONT_11_HEIGHT * 2 + PADDING_DB * 2 + PADDING_DB,
+        2,
+        NUM_SP_H * 2 + FONT_11_HEIGHT + PADDING_DB * 2 + PADDING - PADDING_DB,
+        TFT_DARKCYAN);
 }
 
 void drawMessage(String message)
@@ -706,10 +912,10 @@ void setup()
 
     lapTimeSp.createSprite(LAP_TIME_SP_W - PADDING, LAP_TIME_SP_H - PADDING);
     lapTimeSp.setColorDepth(COLOR_DEPTH);
-    lapTimeSp.setTextDatum(CC_DATUM);
+    lapTimeSp.setTextDatum(CR_DATUM);
     lapTimeSp.setFreeFont(FONT_16);
     lapTimeSp.setTextSize(1);
-    lapTimeSp.setTextColor(TFT_WHITE);
+    lapTimeSp.setTextColor(TFT_WHITE, TFT_BLACK);
     drawLapTime(true);
 
     indicatorSp.createSprite(INDICATOR_SP_W, INDICATOR_SP_H);
@@ -727,6 +933,10 @@ void setup()
     numSp.setTextSize(1);
     numSp.setTextColor(TFT_WHITE, TFT_BLACK);
     drawNum(true);
+
+    miniProgBarSp.createSprite(MINI_PROG_BAR_SP_W - PADDING, MINI_PROG_BAR_SP_H - PADDING);
+    miniProgBarSp.setColorDepth(COLOR_DEPTH);
+    drawMinibar(true);
 }
 
 // =========================================================================
@@ -741,6 +951,7 @@ void loop()
     drawIndicatorLabel(false);
     drawLapTime(false);
     drawNum(false);
+    drawMinibar(false);
 }
 
 // =========================================================================
