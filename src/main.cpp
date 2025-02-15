@@ -27,7 +27,7 @@
 
 #define DEFAULT_FONT FONT_11
 
-#define MSG_LENGTH 150
+#define MSG_LENGTH 160
 #define MSG_END_CHAR '|'
 #define RPM_DELIMITER "R"
 #define KPH_DELIMITER "S"
@@ -106,26 +106,26 @@ volatile float brakeBiasPrev = 0;
 volatile float turboPct = 0;
 volatile float turboPctPrev = 0;
 
-volatile short tyreTempFLValue = 0;
-volatile short tyreTempFLValuePrev = 0;
-volatile short tyreTempFRValue = 0;
-volatile short tyreTempFRValuePrev = 0;
-volatile short tyreTempRLValue = 0;
-volatile short tyreTempRLValuePrev = 0;
-volatile short tyreTempRRValue = 0;
-volatile short tyreTempRRValuePrev = 0;
+volatile float tyreTempFLValue = 0;
+volatile float tyreTempFLValuePrev = 0;
+volatile float tyreTempFRValue = 0;
+volatile float tyreTempFRValuePrev = 0;
+volatile float tyreTempRLValue = 0;
+volatile float tyreTempRLValuePrev = 0;
+volatile float tyreTempRRValue = 0;
+volatile float tyreTempRRValuePrev = 0;
 
-volatile short tyrePressureFLValue = 0;
-volatile short tyrePressureFLValuePrev = 0;
-volatile short tyrePressureFRValue = 0;
-volatile short tyrePressureFRValuePrev = 0;
-volatile short tyrePressureRLValue = 0;
-volatile short tyrePressureRLValuePrev = 0;
-volatile short tyrePressureRRValue = 0;
-volatile short tyrePressureRRValuePrev = 0;
+volatile float tyrePressureFLValue = 0;
+volatile float tyrePressureFLValuePrev = 0;
+volatile float tyrePressureFRValue = 0;
+volatile float tyrePressureFRValuePrev = 0;
+volatile float tyrePressureRLValue = 0;
+volatile float tyrePressureRLValuePrev = 0;
+volatile float tyrePressureRRValue = 0;
+volatile float tyrePressureRRValuePrev = 0;
 
 volatile short dimmerValue = 50;
-volatile short dimmerValuePrev = 50;
+volatile short dimmerValuePrev = 0;
 
 void readSerial()
 {
@@ -163,32 +163,38 @@ void readSerial()
         kphValue = atoi(strtok(NULL, KPH_DELIMITER));
         gearValue = atoi(strtok(NULL, GEAR_DELIMITER));
         shiftLightValue = atoi(strtok(NULL, GEAR_DELIMITER));
+
         fuelValue = atof(strtok(NULL, INDICATOR_DELIMITER));
         ersValue = atof(strtok(NULL, INDICATOR_DELIMITER));
+
         drsValue = atoi(strtok(NULL, INDICATOR_DELIMITER));
         pitValue = atoi(strtok(NULL, INDICATOR_DELIMITER));
+
         curLapTimeValue = strtok(NULL, LAP_DELIMITER);
         bstLapTimeValue = strtok(NULL, LAP_DELIMITER);
         bstSessionLapTimeValue = strtok(NULL, LAP_DELIMITER);
         bstLapTimeDeltaValue = atof(strtok(NULL, LAP_DELIMITER));
+
         lapCurrentValue = strtok(NULL, LAP_DELIMITER);
         lapsTotalValue = strtok(NULL, LAP_DELIMITER);
+
         positionValue = strtok(NULL, LAP_DELIMITER);
         positionsTotalValue = strtok(NULL, LAP_DELIMITER);
+
         absValue = atoi(strtok(NULL, INDICATOR_DELIMITER));
         tcValue = atoi(strtok(NULL, INDICATOR_DELIMITER));
         brakeBias = atof(strtok(NULL, INDICATOR_DELIMITER));
         turboPct = atof(strtok(NULL, INDICATOR_DELIMITER));
 
-        tyreTempFLValue = atoi(strtok(NULL, INDICATOR_DELIMITER));
-        tyreTempFRValue = atoi(strtok(NULL, INDICATOR_DELIMITER));
-        tyreTempRLValue = atoi(strtok(NULL, INDICATOR_DELIMITER));
-        tyreTempRRValue = atoi(strtok(NULL, INDICATOR_DELIMITER));
+        tyreTempFLValue = atof(strtok(NULL, INDICATOR_DELIMITER));
+        tyreTempFRValue = atof(strtok(NULL, INDICATOR_DELIMITER));
+        tyreTempRLValue = atof(strtok(NULL, INDICATOR_DELIMITER));
+        tyreTempRRValue = atof(strtok(NULL, INDICATOR_DELIMITER));
 
-        tyrePressureFLValue = atoi(strtok(NULL, INDICATOR_DELIMITER));
-        tyrePressureFRValue = atoi(strtok(NULL, INDICATOR_DELIMITER));
-        tyrePressureRLValue = atoi(strtok(NULL, INDICATOR_DELIMITER));
-        tyrePressureRRValue = atoi(strtok(NULL, INDICATOR_DELIMITER));
+        tyrePressureFLValue = atof(strtok(NULL, INDICATOR_DELIMITER));
+        tyrePressureFRValue = atof(strtok(NULL, INDICATOR_DELIMITER));
+        tyrePressureRLValue = atof(strtok(NULL, INDICATOR_DELIMITER));
+        tyrePressureRRValue = atof(strtok(NULL, INDICATOR_DELIMITER));
 
         dimmerValue = atoi(strtok(NULL, CONFIG_DELIMITER));
 
@@ -508,7 +514,7 @@ void drawMiniNum(bool drawInitial)
         miniNumSp.fillSprite(TFT_BLACK);
         miniNumSp.setTextDatum(CL_DATUM);
         miniNumSp.drawString(
-            "C " + String(tyreTempFLValue),
+            "C" + String(tyreTempFLValue, 1),
             PADDING,
             MINI_NUM_SP_HF_H - PADDING + 1);
         miniNumSp.pushSprite(
@@ -522,7 +528,7 @@ void drawMiniNum(bool drawInitial)
         miniNumSp.fillSprite(TFT_BLACK);
         miniNumSp.setTextDatum(CL_DATUM);
         miniNumSp.drawString(
-            "C " + String(tyreTempRLValue),
+            "C" + String(tyreTempRLValue, 1),
             PADDING,
             MINI_NUM_SP_HF_H - PADDING + 1);
         miniNumSp.pushSprite(
@@ -536,7 +542,7 @@ void drawMiniNum(bool drawInitial)
         miniNumSp.fillSprite(TFT_BLACK);
         miniNumSp.setTextDatum(CR_DATUM);
         miniNumSp.drawString(
-            String(tyreTempFRValue) + " C",
+            String(tyreTempFRValue, 1) + "C",
             MINI_NUM_SP_W - PADDING_DB,
             MINI_NUM_SP_HF_H - PADDING + 1);
         miniNumSp.pushSprite(
@@ -550,7 +556,7 @@ void drawMiniNum(bool drawInitial)
         miniNumSp.fillSprite(TFT_BLACK);
         miniNumSp.setTextDatum(CR_DATUM);
         miniNumSp.drawString(
-            String(tyreTempRRValue) + " C",
+            String(tyreTempRRValue, 1) + "C",
             MINI_NUM_SP_W - PADDING_DB,
             MINI_NUM_SP_HF_H - PADDING + 1);
         miniNumSp.pushSprite(
@@ -564,7 +570,7 @@ void drawMiniNum(bool drawInitial)
         miniNumSp.fillSprite(TFT_BLACK);
         miniNumSp.setTextDatum(CL_DATUM);
         miniNumSp.drawString(
-            "P " + String(tyrePressureFLValue),
+            "P" + String(tyrePressureFLValue, 1),
             PADDING,
             MINI_NUM_SP_HF_H - PADDING + 1);
         miniNumSp.pushSprite(
@@ -578,7 +584,7 @@ void drawMiniNum(bool drawInitial)
         miniNumSp.fillSprite(TFT_BLACK);
         miniNumSp.setTextDatum(CL_DATUM);
         miniNumSp.drawString(
-            "P " + String(tyrePressureRLValue),
+            "P" + String(tyrePressureRLValue, 1),
             PADDING,
             MINI_NUM_SP_HF_H - PADDING + 1);
         miniNumSp.pushSprite(
@@ -592,7 +598,7 @@ void drawMiniNum(bool drawInitial)
         miniNumSp.fillSprite(TFT_BLACK);
         miniNumSp.setTextDatum(CR_DATUM);
         miniNumSp.drawString(
-            String(tyrePressureFRValue) + " P",
+            String(tyrePressureFRValue, 1) + "P",
             MINI_NUM_SP_W - PADDING_DB,
             MINI_NUM_SP_HF_H - PADDING + 1);
         miniNumSp.pushSprite(
@@ -606,7 +612,7 @@ void drawMiniNum(bool drawInitial)
         miniNumSp.fillSprite(TFT_BLACK);
         miniNumSp.setTextDatum(CR_DATUM);
         miniNumSp.drawString(
-            String(tyrePressureRRValue) + " P",
+            String(tyrePressureRRValue, 1) + "P",
             MINI_NUM_SP_W - PADDING_DB,
             MINI_NUM_SP_HF_H - PADDING + 1);
         miniNumSp.pushSprite(
@@ -650,6 +656,7 @@ void drawLapTime(bool drawInitial)
     {
         curLapTimeValuePrev = curLapTimeValue;
         lapTimeSp.fillSprite(TFT_BLACK);
+        lapTimeSp.setTextColor(TFT_YELLOW);
         lapTimeSp.drawString(
             curLapTimeValue,
             PADDING_HF,

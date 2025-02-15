@@ -3,20 +3,38 @@
   "SerialPortName": "COM3",
   "StartupDelayMs": 1000,
   "IsConnecting": false,
-  "IsEnabled": true,
-  "LogIncomingData": false,
-  "IsConnected": true,
+  "IsEnabled": false,
+  "LogIncomingData": true,
+  "IsConnected": false,
   "BaudRate": 115200,
   "DtrEnable": true,
   "RtsEnable": true,
   "EditorExpanded": true,
   "Name": "Custom Serial device",
   "Description": "DIY Pico LCD 3.5 DASH",
-  "LastErrorDate": "2025-02-15T01:19:49.0595017+02:00",
+  "LastErrorDate": "2025-02-15T19:42:14.2705764+02:00",
   "LastErrorMessage": null,
   "IsFreezed": false,
   "SettingsBuilder": {
     "Settings": [
+      {
+        "Settings": [
+          {
+            "Maximum": 100,
+            "Minimum": 0,
+            "PropertyName": "Dimmer",
+            "CurrentValue": 60,
+            "Name": null,
+            "TypeName": "SliderEntry",
+            "Label": "Dimmer",
+            "Id": "60d264d5-df0e-4a40-be7a-217bc04ef264"
+          }
+        ],
+        "Name": null,
+        "TypeName": "GroupEntry",
+        "Label": "Config",
+        "Id": "32753a59-3eed-4a11-82fa-695ce9348c79"
+      },
       {
         "Settings": [
           {
@@ -216,24 +234,6 @@
         "TypeName": "GroupEntry",
         "Label": "Test (Works when game is NOT running)",
         "Id": "277c4933-21ed-41ee-8770-85eacc6c8312"
-      },
-      {
-        "Settings": [
-          {
-            "Maximum": 100,
-            "Minimum": 0,
-            "PropertyName": "Dimmer",
-            "CurrentValue": 80,
-            "Name": null,
-            "TypeName": "SliderEntry",
-            "Label": "Dimmer",
-            "Id": "60d264d5-df0e-4a40-be7a-217bc04ef264"
-          }
-        ],
-        "Name": null,
-        "TypeName": "GroupEntry",
-        "Label": "Config",
-        "Id": "32753a59-3eed-4a11-82fa-695ce9348c79"
       }
     ],
     "IsEditMode": false
@@ -253,7 +253,7 @@
       "Message": {
         "JSExt": 0,
         "Interpreter": 1,
-        "Expression": "\r\nif ($prop(\"DataCorePlugin.GameRunning\")) {\r\n    // Real Data\r\n    rpm = $prop(\"Rpms\");\r\n    rpmPct = $prop(\"CarSettings_CurrentDisplayedRPMPercent\");\r\n\r\n    kph = $prop(\"SpeedKmh\");\r\n\r\n    gearStr = $prop(\"Gear\");\r\n    switch (gearStr) {\r\n    \tdefault:\r\n    \t\tgear = parseInt(gearStr);\r\n    \t\tbreak;\r\n        case \"R\":\r\n            gear = -1;\r\n            break;\r\n        case \"N\":\r\n            gear = 0;\r\n            break;\r\n    }\r\n\r\n    fuelPct = $prop(\"DataCorePlugin.Computed.Fuel_Percent\");\r\n\r\n    ersPct = $prop(\"ERSPercent\");\r\n\r\n    shiftLight =\r\n        $prop(\"CarSettings_RPMShiftLight1\") +\r\n        $prop(\"CarSettings_RPMShiftLight2\") +\r\n        $prop(\"CarSettings_RPMRedLineReached\");\r\n\r\n    drs = $prop(\"DRSAvailable\") + parseInt($prop(\"DRSEnabled\"));\r\n    \r\n    pit = $prop(\"PitLimiterOn\") + parseInt($prop(\"IsInPitLane\"));\r\n\r\n    curLapTime = $prop(\"CurrentLapTime\");\r\n    bstLapTime = $prop('BestLapTime');\r\n    bstSessionLapTime = $prop('PersistantTrackerPlugin.SessionBest');\r\n    bstLapDelta = $prop(\"PersistantTrackerPlugin.SessionBestLiveDeltaSeconds\");\r\n        \r\n    lapCurrent = $prop(\"CurrentLap\");\r\n    lapsTotal = $prop(\"TotalLaps\");\r\n    \r\n    position = $prop(\"Position\");\r\n    positionsTotal = $prop(\"PlayerClassOpponentsCount\");\r\n    \r\n    assistABS = $prop(\"ABSLevel\");\r\n    assistTC = $prop(\"TCLevel\");\r\n    brakeBias = $prop(\"BrakeBias\");\r\n    turboPct = $prop(\"TurboPercent\");\r\n\r\n    tyreTempFL = $prop(\"TyreTemperatureFrontLeft\");\r\n    tyreTempFR = $prop(\"TyreTemperatureFrontRight\");\r\n    tyreTempRL = $prop(\"TyreTemperatureRearLeft\");\r\n    tyreTempRR = $prop(\"TyreTemperatureRearRight\");\r\n\r\n    tyrePressureFL = $prop(\"TyrePressureFrontLeft\");\r\n    tyrePressureFR = $prop(\"TyrePressureFrontRight\");\r\n    tyrePressureRL = $prop(\"TyrePressureRearLeft\");\r\n    tyrePressureRR = $prop(\"TyrePressureRearRight\");\r\n} else {\r\n    // For testing\r\n    rpm = $prop(\"Settings.Rpms\");\r\n    rpmPct = parseInt((rpm / 11000) * 100);\r\n    kph = $prop(\"Settings.Kph\");\r\n    gear = $prop(\"Settings.Gear\");\r\n    fuelPct = $prop(\"Settings.Fuel\");\r\n    ersPct = $prop(\"Settings.ERS\");\r\n    shiftLight = (rpm > 7000 || rpmPct > 70) + (rpm > 8000 || rpmPct > 80) + (rpm > 9000 || rpmPct > 90);\r\n    drs = $prop(\"Settings.DRS.Key\");\r\n    pit = $prop(\"Settings.PIT.Key\");\r\n    curLapTime = bstLapTime = bstSessionLapTime = $prop(\"Settings.LapTime\");\r\n    bstLapDelta = parseFloat($prop(\"Settings.BstLapDelta\"));\r\n    lapCurrent = $prop(\"Settings.CurrentLap\");\r\n    lapsTotal = $prop(\"Settings.TotalLaps\");\r\n    position = $prop(\"Settings.Position\");\r\n    positionsTotal = $prop(\"Settings.PositionsTotal\");\r\n    assistABS = $prop(\"Settings.ABSLevel\");\r\n    assistTC = $prop(\"Settings.TCLevel\");\r\n    brakeBias = $prop(\"Settings.BrakeBias\");\r\n    turboPct = $prop(\"Settings.TurboPercent\");\r\n}\r\n\r\ndimmer = $prop('Settings.Dimmer');\r\n\r\nreturn String(rpm).padStart(5,'0')  + 'R' \r\n\t + String(rpmPct.toFixed(2)).padStart(6,'0') + 'R'\r\n     + String(kph.toFixed(0)).padStart(3,'0')  + 'S' \r\n\t + String(gear).padStart(1,'0') + 'G'\r\n\t + String(shiftLight.toFixed(0)).padStart(1,'0') + 'G'\r\n\t + String(fuelPct.toFixed(1)).padStart(4,'0') + 'I'\r\n\t + String(ersPct.toFixed(1)).padStart(5,'0') + 'I'\r\n\t + String(drs).padStart(1,'0') + 'I'\r\n\t + String(pit).padStart(1,'0') + 'I'\r\n\t + String(curLapTime).substr(3,9) + 'L'\r\n\t + String(bstLapTime).substr(3,9) + 'L'\r\n\t + String(bstSessionLapTime).substr(3,9) + 'L'\r\n\t + String(bstLapDelta.toFixed(3)).padStart(6,'0') + 'L'\r\n\t + String(lapCurrent).padStart(2,'0') + 'L'\r\n\t + String(lapsTotal).padStart(2,'0') + 'L'\r\n\t + String(position).padStart(2,'0') + 'L'\r\n\t + String(positionsTotal).padStart(2,'0') + 'L'\r\n\t + String(assistABS).padStart(2,'0') + 'I'\r\n\t + String(assistTC).padStart(2,'0') + 'I'\r\n\t + String(brakeBias.toFixed(1)).padStart(5,'0') + 'I'\r\n\t + String(turboPct.toFixed(1)).padStart(5,'0') + 'I'\r\n\t + String(tyreTempFL.toFixed(1)).padStart(5,'0') + 'I'\r\n\t + String(tyreTempFR.toFixed(1)).padStart(5,'0') + 'I'\r\n\t + String(tyreTempRL.toFixed(1)).padStart(5,'0') + 'I'\r\n\t + String(tyreTempRR.toFixed(1)).padStart(5,'0') + 'I'\r\n\t + String(tyrePressureFL.toFixed(1)).padStart(3,'0') + 'I'\r\n\t + String(tyrePressureFR.toFixed(1)).padStart(3,'0') + 'I'\r\n\t + String(tyrePressureRL.toFixed(1)).padStart(3,'0') + 'I'\r\n\t + String(tyrePressureRR.toFixed(1)).padStart(3,'0') + 'I'\r\n\t + String(dimmer).padStart(3,'0') + 'C'\r\n\t + '|';",
+        "Expression": "\r\nif ($prop(\"DataCorePlugin.GameRunning\")) {\r\n    // Real Data\r\n    rpm = $prop(\"Rpms\");\r\n    rpmPct = $prop(\"CarSettings_CurrentDisplayedRPMPercent\");\r\n\r\n    kph = $prop(\"SpeedKmh\");\r\n\r\n    gearStr = $prop(\"Gear\");\r\n    switch (gearStr) {\r\n    \tdefault:\r\n    \t\tgear = parseInt(gearStr);\r\n    \t\tbreak;\r\n        case \"R\":\r\n            gear = -1;\r\n            break;\r\n        case \"N\":\r\n            gear = 0;\r\n            break;\r\n    }\r\n\r\n    fuelPct = $prop(\"DataCorePlugin.Computed.Fuel_Percent\");\r\n\r\n    ersPct = $prop(\"ERSPercent\");\r\n\r\n    shiftLight =\r\n        $prop(\"CarSettings_RPMShiftLight1\") +\r\n        $prop(\"CarSettings_RPMShiftLight2\") +\r\n        $prop(\"CarSettings_RPMRedLineReached\");\r\n\r\n    drs = $prop(\"DRSAvailable\") + parseInt($prop(\"DRSEnabled\"));\r\n    \r\n    pit = $prop(\"PitLimiterOn\") + parseInt($prop(\"IsInPitLane\"));\r\n\r\n    curLapTime = $prop(\"CurrentLapTime\");\r\n    bstLapTime = $prop('BestLapTime');\r\n    bstSessionLapTime = $prop('PersistantTrackerPlugin.SessionBest');\r\n    bstLapDelta = $prop(\"PersistantTrackerPlugin.SessionBestLiveDeltaSeconds\");\r\n        \r\n    lapCurrent = $prop(\"CurrentLap\");\r\n    lapsTotal = $prop(\"TotalLaps\");\r\n    \r\n    position = $prop(\"Position\");\r\n    positionsTotal = $prop(\"PlayerClassOpponentsCount\");\r\n    \r\n    assistABS = $prop(\"ABSLevel\");\r\n    assistTC = $prop(\"TCLevel\");\r\n    brakeBias = $prop(\"BrakeBias\");\r\n    turboPct = $prop(\"TurboPercent\");\r\n\r\n    tyreTempFL = $prop(\"TyreTemperatureFrontLeft\");\r\n    tyreTempFR = $prop(\"TyreTemperatureFrontRight\");\r\n    tyreTempRL = $prop(\"TyreTemperatureRearLeft\");\r\n    tyreTempRR = $prop(\"TyreTemperatureRearRight\");\r\n\r\n    tyrePressureFL = $prop(\"TyrePressureFrontLeft\");\r\n    tyrePressureFR = $prop(\"TyrePressureFrontRight\");\r\n    tyrePressureRL = $prop(\"TyrePressureRearLeft\");\r\n    tyrePressureRR = $prop(\"TyrePressureRearRight\");\r\n} else {\r\n    // For testing\r\n    rpm = $prop(\"Settings.Rpms\");\r\n    rpmPct = parseInt((rpm / 11000) * 100);\r\n    kph = $prop(\"Settings.Kph\");\r\n    gear = $prop(\"Settings.Gear\");\r\n    fuelPct = $prop(\"Settings.Fuel\");\r\n    ersPct = $prop(\"Settings.ERS\");\r\n    shiftLight = (rpm > 7000 || rpmPct > 70) + (rpm > 8000 || rpmPct > 80) + (rpm > 9000 || rpmPct > 90);\r\n    drs = $prop(\"Settings.DRS.Key\");\r\n    pit = $prop(\"Settings.PIT.Key\");\r\n    curLapTime = bstLapTime = bstSessionLapTime = $prop(\"Settings.LapTime\");\r\n    bstLapDelta = parseFloat($prop(\"Settings.BstLapDelta\"));\r\n    lapCurrent = $prop(\"Settings.CurrentLap\");\r\n    lapsTotal = $prop(\"Settings.TotalLaps\");\r\n    position = $prop(\"Settings.Position\");\r\n    positionsTotal = $prop(\"Settings.PositionsTotal\");\r\n    assistABS = $prop(\"Settings.ABSLevel\");\r\n    assistTC = $prop(\"Settings.TCLevel\");\r\n    brakeBias = $prop(\"Settings.BrakeBias\");\r\n    turboPct = $prop(\"Settings.TurboPercent\");\r\n}\r\n\r\ndimmer = $prop('Settings.Dimmer');\r\n\r\nreturn String(rpm).padStart(5,'0')  + 'R' \r\n\t + String(rpmPct.toFixed(2)).padStart(6,'0') + 'R'\r\n     + String(kph.toFixed(0)).padStart(3,'0')  + 'S' \r\n\t + String(gear).padStart(1,'0') + 'G'\r\n\t + String(shiftLight.toFixed(0)).padStart(1,'0') + 'G'\r\n\t + String(fuelPct.toFixed(1)).padStart(4,'0') + 'I'\r\n\t + String(ersPct.toFixed(1)).padStart(5,'0') + 'I'\r\n\t + String(drs).padStart(1,'0') + 'I'\r\n\t + String(pit).padStart(1,'0') + 'I'\r\n\t + String(curLapTime).substr(3,9) + 'L'\r\n\t + String(bstLapTime).substr(3,9) + 'L'\r\n\t + String(bstSessionLapTime).substr(3,9) + 'L'\r\n\t + String(bstLapDelta.toFixed(3)).padStart(6,'0') + 'L'\r\n\t + String(lapCurrent).padStart(2,'0') + 'L'\r\n\t + String(lapsTotal).padStart(2,'0') + 'L'\r\n\t + String(position).padStart(2,'0') + 'L'\r\n\t + String(positionsTotal).padStart(2,'0') + 'L'\r\n\t + String(assistABS).padStart(2,'0') + 'I'\r\n\t + String(assistTC).padStart(2,'0') + 'I'\r\n\t + String(brakeBias.toFixed(1)).padStart(5,'0') + 'I'\r\n\t + String(turboPct.toFixed(1)).padStart(5,'0') + 'I'\r\n\t + String(tyreTempFL.toFixed(1)).padStart(5,'0') + 'I'\r\n\t + String(tyreTempFR.toFixed(1)).padStart(5,'0') + 'I'\r\n\t + String(tyreTempRL.toFixed(1)).padStart(5,'0') + 'I'\r\n\t + String(tyreTempRR.toFixed(1)).padStart(5,'0') + 'I'\r\n\t + String(tyrePressureFL.toFixed(1)).padStart(5,'0') + 'I'\r\n\t + String(tyrePressureFR.toFixed(1)).padStart(5,'0') + 'I'\r\n\t + String(tyrePressureRL.toFixed(1)).padStart(5,'0') + 'I'\r\n\t + String(tyrePressureRR.toFixed(1)).padStart(5,'0') + 'I'\r\n\t + String(dimmer).padStart(3,'0') + 'C'\r\n\t + '|';",
         "PreExpression": "var rpm = 0;\r\nvar rpmPct = 0;\r\nvar kph = 0;\r\nvar gear = 0;\r\nvar fuelPct = 0;\r\nvar ersPct = 0;\r\nvar shiftLight = 0;\r\nvar drs = 0;\r\nvar pit = 0;\r\n\r\nvar curLapTime = \"\";\r\nvar bstLapTime = \"\";\r\nvar bstSessionLapTime = \"\";\r\nvar bstLapDelta = 0;\r\n\r\nvar lapCurrent = 0;\r\nvar lapsTotal = 0;\r\n\r\nvar position = 0;\r\nvar positionsTotal = 0;\r\n\r\nvar assistABS = 0;\r\nvar assistTC = 0;\r\n\r\nvar brakeBias = 0;\r\nvar turboPct = 0;\r\n\r\nvar tyreTempFL = 0;\r\nvar tyreTempFR = 0;\r\nvar tyreTempRL = 0;\r\nvar tyreTempRR = 0;\r\n\r\nvar tyrePressureFL = 0;\r\nvar tyrePressureFR = 0;\r\nvar tyrePressureRL = 0;\r\nvar tyrePressureRR = 0;\r\n\r\nvar dimmer = 0;"
       },
       "IsEnabled": true,
