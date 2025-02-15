@@ -700,7 +700,7 @@ void dimmerLoop(bool drawInitial)
     if (drawInitial || dimmerValue != dimmerValuePrev)
     {
         dimmerValuePrev = dimmerValue;
-        analogWrite(TFT_BL, map(dimmerValue, 0, 100, 0, 255));
+        analogWrite(TFT_BL, map(dimmerValue, 0, 100, 51, 255));
     }
 }
 
