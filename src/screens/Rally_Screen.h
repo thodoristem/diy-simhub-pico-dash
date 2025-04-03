@@ -154,10 +154,11 @@ void rallyDrawTime(bool drawInitial)
 
         rallyTimeSp.setTextColor(TFT_YELLOW, TFT_BLACK);
         rallyTimeSp.fillSprite(TFT_BLACK);
+        rallyTimeSp.setTextDatum(CL_DATUM);
 
         rallyTimeSp.drawString(
             curLapTimeValue,
-            RALLY_TIME_SP_HF_W - RALLY_PADDING,
+            RALLY_PADDING_DB * 2,
             RALLY_TIME_SP_HF_H - RALLY_PADDING);
 
         rallyTimeSp.pushSprite(
@@ -186,7 +187,7 @@ void rallyDrawOnce()
         0,
         TFT_DARKGREEN);
 
-    //
+    // 
     TFT.fillRoundRect(
         RALLY_GEAR_SP_W,
         TFT_H - RALLY_GEAR_SP_H,
