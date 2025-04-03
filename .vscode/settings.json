@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "*.h": "cpp",
+        "font72x53rle.c": "cpp"
+    },
+    "java.project.explorer.showNonJavaResources": false
+}
