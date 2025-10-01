@@ -136,6 +136,7 @@ void rallyDrawTime(bool drawInitial)
         }
 
         rallyTimeSp.fillSprite(TFT_BLACK);
+        rallyTimeSp.setTextDatum(CC_DATUM);
 
         rallyTimeSp.drawFloat(
             bstLapTimeDeltaValue,
@@ -144,7 +145,7 @@ void rallyDrawTime(bool drawInitial)
             RALLY_TIME_SP_HF_H - RALLY_PADDING);
 
         rallyTimeSp.pushSprite(
-            TFT_W - RALLY_TIME_SP_W + RALLY_PADDING,
+            TFT_W - RALLY_TIME_SP_W,
             TFT_H - RALLY_TIME_SP_H * 2 - FONT_14_HEIGHT + RALLY_PADDING + RALLY_PADDING_HF);
     }
 
