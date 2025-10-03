@@ -57,12 +57,15 @@ void drawMessage(String message, int pulseDelay)
     TFT.setTextSize(1);
     TFT.setTextColor(TFT_WHITE, TFT_BLACK);
     TFT.setTextDatum(CC_DATUM);
+
+    delay(pulseDelay / 2);
+
     TFT.drawString(message, TFT_HF_W, TFT_HF_H);
 
-    delay(pulseDelay);
+    delay(pulseDelay / 2);
 }
 
-short screenValue = 1;
+short screenValue = 0;
 short screenValuePrev = 0;
 bool screenChanged = true;
 
@@ -82,7 +85,7 @@ int shiftLightColor = TFT_WHITE;
 short kphValue = 0;
 short kphValuePrev = 0;
 
-short gearValue = 1;
+short gearValue = 0;
 short gearValuePrev = 0;
 
 float fuelValue = 0;
